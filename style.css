@@ -1,0 +1,430 @@
+/* --- 1. Variables --- */
+:root {
+  --bg-image: url("aurora.jpg");   /* portrait photo: used on portrait screens */
+  --teal: #12908f;
+  --danger: #ff6b6b;
+  --ok: #3ecf9a;
+  --link: #2f86ff;
+  --muted: #9b9fa3;
+  --field: #ebebeb;
+  --btn: #12404a;
+  --btn-hover: #1a5866;
+  --glass: rgba(2, 10, 12, .62);   /* tint of the card, tiles and member panel */
+}
+
+/* Landscape screens: */
+@media (min-aspect-ratio: 1/1) {
+  :root { --bg-image: url("aurora-wide.jpg"), url("aurora.jpg"); }
+}
+
+* { box-sizing: border-box; }
+
+/* hidden on screen */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+
+/* --- 2. Page and card --- */
+body {
+  min-height: 100dvh;
+  margin: 0;
+  padding: 16px;
+  display: grid;
+  place-items: center;
+  font: 500 1rem "DM Sans", sans-serif;
+  color: #fff;
+  background-image: var(--bg-image);
+  background-size: cover;
+  background-position: center center, center bottom;
+  background-repeat: no-repeat;
+}
+
+.card {
+  width: min(100%, 480px);
+  padding: clamp(28px, 6vw, 56px) clamp(20px, 6vw, 60px);
+  border-radius: 48px;
+  background: var(--glass);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, .5);
+  animation: rise .8s ease both;
+}
+
+.view { display: none; text-align: center; }
+
+.view.show {
+  display: block;
+  animation: rise .5s ease both;
+}
+
+h1 {
+  margin: 0 0 28px;
+  font: 700 clamp(3rem, 11vw, 4.4rem) "Dancing Script", cursive;
+  color: var(--teal);
+}
+
+/* --- 3. Form fields --- */
+.field {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 60px;
+  margin: 20px 0;
+  padding: 0 18px;
+  border: 2px solid transparent;
+  border-radius: 99px;
+  background: var(--field);
+  transition: .15s;
+}
+
+.field:focus-within {
+  border-color: var(--teal);
+  box-shadow: 0 0 0 4px rgba(18, 144, 143, .3);
+}
+
+.field.bad {
+  border-color: var(--danger);
+  animation: shake .4s;
+}
+
+.field i,
+.eye {
+  font-style: normal;
+  filter: grayscale(1) opacity(.8);
+}
+
+.field i.mail {
+  filter: grayscale(1) brightness(.7);
+}
+
+.field input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  background: none;
+  font: inherit;
+  color: #222;
+}
+
+.eye {
+  border: 0;
+  background: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.msg {
+  min-height: 1.3em;
+  margin: 0 0 8px;
+  font-size: .9rem;
+  color: var(--danger);
+}
+
+/* --- 4. Buttons and links --- */
+.btn {
+  min-width: 170px;
+  height: 54px;
+  border: 0;
+  border-radius: 99px;
+  background: var(--btn);
+  color: #fff;
+  font: 700 1.1rem "DM Sans", sans-serif;
+  cursor: pointer;
+  transition: .25s;
+}
+
+.btn:hover {
+  background: var(--btn-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, .4);
+}
+
+.alt {
+  margin-top: 30px;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+.alt a { color: var(--link); }
+
+.alt.forgot {
+  margin: -8px 0 8px;
+  padding-right: 18px;
+  text-align: right;
+  font-size: .9rem;
+}
+
+/* --- 5. Forgot-password --- */
+.msg.ok { color: var(--ok); }
+
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  overflow: auto;
+  background: rgba(0, 0, 0, .6);
+}
+
+.modal[hidden] { display: none; }
+
+.modal .card { position: relative; }
+
+.x {
+  position: absolute;
+  top: 18px;
+  right: 22px;
+  border: 0;
+  background: none;
+  color: var(--muted);
+  font-size: 1.3rem;
+  cursor: pointer;  
+}
+
+.x:hover { color: #fff; }
+
+.hint {
+  margin: 0 0 18px;
+  font-size: .95rem;
+  color: var(--muted);
+}
+
+.demo {
+  margin: 0 0 6px;
+  color: var(--teal);
+}
+
+.demo b {
+  font-size: 1.2rem;
+  letter-spacing: .25em;
+}
+
+/* --- 6. Animations --- */
+@keyframes rise {
+  from { opacity: 0; transform: translateY(20px); }
+}
+
+@keyframes shake {
+  25% { transform: translateX(-8px); }
+  75% { transform: translateX(8px); }
+}
+
+/* ===== Welcome + Profiles (added) ===== */
+/* The card only holds login, signup and welcome. On the profiles and member views
+   it would be an empty box, so hide it there. */
+main.card:not(:has(.view.show)) { display: none; }
+
+/* welcome */
+#welcome h1 {
+  margin-bottom: 12px;
+  font-size: clamp(2.6rem, 9vw, 3.6rem);
+}
+
+#welcome .hint { margin-bottom: 28px; }
+
+/* profiles: 2x2 glass tiles. #profiles and .profile-grid are layout only.
+   Every .tile is its own object. */
+#profiles { width: min(100%, 1100px); }
+
+/* Log Out: color change only. The lift + shadow made the glass tiles above it flash a dark band. */
+#profiles .btn:hover { transform: none; box-shadow: none; }
+
+.profile-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(12px, 2.5vw, 28px);
+  margin: 0 0 32px;
+}
+
+@media (max-width: 640px) {
+  .profile-grid { grid-template-columns: minmax(0, 1fr); }
+}
+
+.tile {
+  display: flex;
+  align-items: center;
+  gap: clamp(16px, 3vw, 36px);
+  min-width: 0;
+  padding: clamp(20px, 3vw, 40px) clamp(20px, 4vw, 52px);
+  border: 2px solid rgba(255, 255, 255, .1);
+  border-radius: clamp(28px, 4vw, 48px);
+  background: var(--glass);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, .45);
+  color: #fff;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: transform .25s, background .25s, border-color .25s, box-shadow .25s;
+}
+
+.tile:hover,
+.tile:focus-visible {
+  background: rgba(8, 28, 32, .78);
+  border-color: var(--teal);
+  transform: translateY(-3px);
+  box-shadow: 0 26px 60px rgba(0, 0, 0, .55);
+}
+
+.tile:active { transform: translateY(0); }
+
+.tile:focus-visible,
+#profiles .btn:focus-visible,
+#welcome .btn:focus-visible,
+#member .x:focus-visible,
+.member-links a:focus-visible {
+  outline: 3px solid var(--teal);
+  outline-offset: 3px;
+}
+
+.tile-text {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.tile-name {
+  font: 700 clamp(1.3rem, 2.4vw, 1.8rem) "DM Sans", sans-serif;
+  overflow-wrap: anywhere;
+}
+
+.tile-section,
+.tile-sid {
+  font: 700 clamp(1rem, 1.9vw, 1.45rem) "DM Sans", sans-serif;
+  overflow-wrap: anywhere;
+}
+
+/* avatar: outline person icon by default, round photo when the file loads */
+.avatar {
+  display: block;
+  flex: none;
+  width: clamp(72px, 11vw, 128px);
+  aspect-ratio: 1;
+  color: #fff;
+}
+
+.avatar svg,
+.avatar img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.avatar.photo {
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+.avatar img { object-fit: cover; }
+
+/* member detail: */
+#member {
+  position: relative;
+  width: min(100%, 1000px);
+  padding: clamp(28px, 5vw, 64px);
+  border-radius: clamp(28px, 4vw, 48px);
+  background: var(--glass);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, .5);
+  text-align: left;
+}
+
+#member.show {
+  display: flex;
+  align-items: flex-start;
+  gap: clamp(20px, 4vw, 56px);
+  animation: none;                      /* the tile-to-panel zoom (View Transition) replaces the fade */
+  view-transition-name: member;         /* same name the clicked tile gets in script.js */
+}
+
+::view-transition-group(member) { animation-duration: .45s; }
+
+@media (max-width: 640px) {
+  #member.show {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+#member-avatar { flex: none; }
+
+#member .avatar { width: clamp(96px, 16vw, 180px); }
+
+.member-text {
+  flex: 1;
+  min-width: 0;
+}
+
+#member h1 {
+  margin: 0 0 12px;
+  font-size: clamp(2.8rem, 8vw, 5rem);
+  line-height: 1;
+  color: #fff;
+}
+
+.member-who {
+  margin: 0 0 18px;
+  color: var(--muted);
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+
+.member-who b { color: #fff; }
+
+.member-bio {
+  margin: 0 0 22px;
+  font-size: clamp(.95rem, 1.7vw, 1.35rem);
+  line-height: 1.7;
+  letter-spacing: .08em;
+  text-align: justify;
+  color: #fff;
+}
+
+.member-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.member-links[hidden] { display: none; }
+
+.member-links a {
+  display: inline-block;
+  padding: 8px 16px;
+  border: 1px solid rgba(255, 255, 255, .2);
+  border-radius: 99px;
+  color: var(--link);
+  text-decoration: none;
+  transition: background .25s, border-color .25s;
+}
+
+.member-links a:hover,
+.member-links a:focus-visible {
+  background: rgba(255, 255, 255, .1);
+  border-color: var(--link);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tile,
+  .member-links a { transition: none; }
+
+  .tile:hover,
+  .tile:focus-visible,
+  .tile:active { transform: none; }
+
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) { animation: none; }
+}

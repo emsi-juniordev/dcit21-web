@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TEAM NETFLIX</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <main class="card">
+
+    <!-- Log in -->
+    <form id="login" class="view show" novalidate>
+      <h1>Welcome!</h1>
+
+      <div class="field">
+        <i>👤</i>
+        <input name="identifier" placeholder="username or email" autocomplete="username">
+      </div>
+
+      <div class="field">
+        <i>🔒</i>
+        <input name="password" type="password" placeholder="password" autocomplete="current-password">
+        <button type="button" class="eye" aria-label="Show password">👁</button>
+      </div>
+
+      <p class="alt forgot"><a href="#" id="forgot">Forgot password?</a></p>
+
+      <p class="msg" role="alert"></p>
+      <button class="btn">Log In</button>
+      <p class="alt">Doesn't have an account yet?<br><a href="#" data-go="signup">Sign up</a></p>
+    </form>
+
+    <!-- Sign up form -->
+    <form id="signup" class="view" novalidate>
+      <h1>Join us!</h1>
+
+      <div class="field">
+        <i>👤</i>
+        <input name="username" placeholder="username" autocomplete="username">
+      </div>
+
+      <div class="field">
+        <i class="mail">✉️</i>
+        <input name="email" type="email" placeholder="email" autocomplete="email">
+      </div>
+
+      <div class="field">
+        <i>🔒</i>
+        <input name="password" type="password" placeholder="password" autocomplete="new-password">
+        <button type="button" class="eye" aria-label="Show password">👁</button>
+      </div>
+
+      <div class="field">
+        <i>🔒</i>
+        <input name="confirm" type="password" placeholder="confirm password" autocomplete="new-password">
+      </div>
+
+      <p class="msg"></p>
+      <button class="btn">Sign Up</button>
+      <p class="alt">Already have an account?<br><a href="#" data-go="login">Log in</a></p>
+    </form>
+
+    <!-- Welcome -->
+    <section id="welcome" class="view">
+      <h1>Welcome to Team Netflix</h1>
+      <p class="hint">BSIT 1-5.</p>
+      <button type="button" class="btn" id="welcome-continue">Continue</button>
+    </section>
+
+  </main>
+
+  <!-- Profiles: outside the card on purpose, so each tile stands alone -->
+  <section id="profiles" class="view">
+    <h1 class="sr-only">The Team</h1>
+    <div id="profile-grid" class="profile-grid"></div>
+    <button class="btn" id="out">Log Out</button>
+  </section>
+
+  <!-- Member details (opened from a profile tile): outside the card, wide glass panel -->
+  <section id="member" class="view" aria-labelledby="member-name">
+    <button type="button" class="x" id="member-close" aria-label="Close profile">✕</button>
+    <div id="member-avatar"></div>
+    <div class="member-text">
+      <h1>About Me</h1>
+      <p class="member-who"><b id="member-name"></b><span id="member-meta"></span></p>
+      <p class="member-bio" id="member-bio"></p>
+      <ul class="member-links" id="member-links" hidden></ul>
+    </div>
+  </section>
+
+  <!--forgot password-->
+  <div id="reset" class="modal" hidden>
+    <div class="card" role="dialog" aria-modal="true" aria-label="Reset password">
+      <button type="button" class="x" id="reset-close" aria-label="Close">✕</button>
+
+      <!-- who forgot?  -->
+      <form id="reset-request" class="view show" novalidate>
+        <h1>Reset</h1>
+        <p class="hint">Enter your username or email and we'll send you a 6-digit code.</p>
+
+        <div class="field">
+          <i>👤</i>
+          <input name="identifier" placeholder="username or email" autocomplete="username">
+        </div>
+
+        <p class="msg"></p>
+        <button class="btn">Send Code</button>
+      </form>
+
+      <!-- new password -->
+      <form id="reset-confirm" class="view" novalidate>
+        <h1>Verify</h1>
+        <p class="hint">Code sent to <b id="sent-to"></b></p>
+
+        <!-- DEMO ONLY -->
+        <p class="demo">Demo code: <b id="demo-code"></b></p>
+
+        <div class="field">
+          <i>🔑</i>
+          <input name="code" inputmode="numeric" maxlength="6" placeholder="6-digit code" autocomplete="one-time-code">
+        </div>
+
+        <div class="field">
+          <i>🔒</i>
+          <input name="password" type="password" placeholder="new password" autocomplete="new-password">
+          <button type="button" class="eye" aria-label="Show password">👁</button>
+        </div>
+
+        <div class="field">
+          <i>🔒</i>
+          <input name="confirm" type="password" placeholder="confirm password" autocomplete="new-password">
+        </div>
+
+        <p class="msg"></p>
+        <button class="btn">Reset Password</button>
+        <p class="alt">Didn't get it?<br><a href="#" id="resend">Resend code</a></p>
+      </form>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
